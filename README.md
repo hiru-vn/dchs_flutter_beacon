@@ -1,10 +1,11 @@
-# Flutter Beacon
+# Dchs Flutter Beacon
+
 
 [![Pub](https://img.shields.io/pub/v/flutter_beacon.svg)](https://pub.dartlang.org/packages/flutter_beacon) [![GitHub](https://img.shields.io/github/license/alann-maulana/flutter_beacon.svg?color=2196F3)](https://github.com/alann-maulana/flutter_beacon/blob/master/LICENSE) [![Build](https://github.com/alann-maulana/flutter_beacon/workflows/Flutter%20CI/badge.svg)](https://github.com/alann-maulana/flutter_beacon/actions?query=workflow%3A%22Flutter+CI%22) [![Coverage Status](https://coveralls.io/repos/github/alann-maulana/flutter_beacon/badge.svg?branch=master)](https://coveralls.io/github/alann-maulana/flutter_beacon?branch=master)  [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_beacon.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Falann-maulana%2Fflutter_beacon?ref=badge_shield) [![codecov](https://codecov.io/gh/alann-maulana/flutter_beacon/branch/master/graph/badge.svg)](https://codecov.io/gh/alann-maulana/flutter_beacon) 
 
-[Flutter plugin](https://pub.dartlang.org/packages/flutter_beacon/) to work with iBeacons.  
+[Flutter plugin](https://pub.dartlang.org/packages/dchs_flutter_beacon/) to work with iBeacons.  
 
-An hybrid iBeacon scanner and transmitter SDK for Flutter plugin. Supports Android API 18+ and iOS 8+.
+An hybrid iBeacon scanner and transmitter SDK for Flutter plugin. Supports Android API 21+ and iOS 13+.
 
 Features:
 
@@ -19,7 +20,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  flutter_beacon: latest
+  dchs_flutter_beacon: latest
 ```
 
 ### Setup specific for Android
@@ -157,6 +158,6 @@ _streamMonitoring.cancel();
 
 # Author
 
-Flutter Beacon plugin is developed by Eyro Labs. You can contact me at <maulana@cubeacon.com>.
+Flutter Beacon plugin was developed by Eyro Labs. You can contact me at <maulana@cubeacon.com>.
 
-Porting to Kotlin and latest version of plugin definition for Flutter 3.24 by Dario Cavada. You can contact me at <dario.cavada.lab@gmail.com>
+DCHS Flutter Beacon is an updated version of the original plugin, now ported to Kotlin and Swift by Dario Cavada. For inquiries or support, feel free to reach out at dario.cavada.lab@gmail.com.
