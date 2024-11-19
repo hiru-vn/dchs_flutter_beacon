@@ -124,7 +124,9 @@ void main() {
       throw PlatformException(code: 'error', message: 'invalid region ranging');
     });
 
-    monitoringChannel.setMockMethodCallHandler((MethodCall methodCall) async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(monitoringChannel,
+            (MethodCall methodCall) async {
       final args = methodCall.arguments;
 
       if (args is List) {
@@ -136,7 +138,7 @@ void main() {
           return Region.fromJson(arg);
         }).toList();
 
-        regions.forEach((region) {
+        for (var region in regions) {
           dynamic result;
           if (region.identifier == 'onEnter') {
             result = {
@@ -164,7 +166,7 @@ void main() {
               (ByteData? data) {},
             );
           }
-        });
+        }
         return;
       }
 

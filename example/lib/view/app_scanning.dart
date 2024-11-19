@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,11 +10,13 @@ import '/controller/requirement_state_controller.dart';
 import 'package:get/get.dart';
 
 class TabScanning extends StatefulWidget {
+  const TabScanning({super.key});
+
   @override
-  _TabScanningState createState() => _TabScanningState();
+  TabScanningState createState() => TabScanningState();
 }
 
-class _TabScanningState extends State<TabScanning> {
+class TabScanningState extends State<TabScanning> {
   StreamSubscription<RangingResult>? _streamRanging;
   final _regionBeacons = <Region, List<Beacon>>{};
   final _beacons = <Beacon>[];
@@ -80,9 +84,9 @@ class _TabScanningState extends State<TabScanning> {
         setState(() {
           _regionBeacons[result.region] = result.beacons;
           _beacons.clear();
-          _regionBeacons.values.forEach((list) {
+          for (var list in _regionBeacons.values) {
             _beacons.addAll(list);
-          });
+          }
           _beacons.sort(_compareParameters);
         });
       }
@@ -122,7 +126,7 @@ class _TabScanningState extends State<TabScanning> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _beacons.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView(
               children: ListTile.divideTiles(
                 context: context,
@@ -131,26 +135,26 @@ class _TabScanningState extends State<TabScanning> {
                     return ListTile(
                       title: Text(
                         beacon.proximityUUID,
-                        style: TextStyle(fontSize: 15.0),
+                        style: const TextStyle(fontSize: 15.0),
                       ),
-                      subtitle: new Row(
+                      subtitle: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           Flexible(
-                            child: Text(
-                              'Major: ${beacon.major}\nMinor: ${beacon.minor}',
-                              style: TextStyle(fontSize: 13.0),
-                            ),
                             flex: 1,
                             fit: FlexFit.tight,
+                            child: Text(
+                              'Major: ${beacon.major}\nMinor: ${beacon.minor}',
+                              style: const TextStyle(fontSize: 13.0),
+                            ),
                           ),
                           Flexible(
-                            child: Text(
-                              'Accuracy: ${beacon.accuracy}m\nRSSI: ${beacon.rssi}',
-                              style: TextStyle(fontSize: 13.0),
-                            ),
                             flex: 2,
                             fit: FlexFit.tight,
+                            child: Text(
+                              'Accuracy: ${beacon.accuracy}m\nRSSI: ${beacon.rssi}',
+                              style: const TextStyle(fontSize: 13.0),
+                            ),
                           )
                         ],
                       ),

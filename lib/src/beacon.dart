@@ -47,8 +47,8 @@ class Beacon {
     this.txPower,
     required this.accuracy,
     Proximity? proximity,
-  })  : this.rssi = rssi ?? -1,
-        this._proximity = proximity;
+  })  : rssi = rssi ?? -1,
+        _proximity = proximity;
 
   /// Create beacon object from json.
   Beacon.fromJson(dynamic json)

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter/services.dart';
 import 'package:dchs_flutter_beacon/dchs_flutter_beacon.dart';
 import '/controller/requirement_state_controller.dart';
 import 'package:get/get.dart';
 
 class TabBroadcasting extends StatefulWidget {
+  const TabBroadcasting({super.key});
+
   @override
-  _TabBroadcastingState createState() => _TabBroadcastingState();
+  TabBroadcastingState createState() => TabBroadcastingState();
 }
 
-class _TabBroadcastingState extends State<TabBroadcasting> {
+class TabBroadcastingState extends State<TabBroadcasting> {
   final controller = Get.find<RequirementStateController>();
   final clearFocus = FocusNode();
   bool broadcasting = false;
@@ -55,7 +55,7 @@ class _TabBroadcastingState extends State<TabBroadcasting> {
         onTap: () => FocusScope.of(context).requestFocus(clearFocus),
         child: Obx(
           () => broadcastReady != true
-              ? Center(child: Text('Please wait...'))
+              ? const Center(child: Text('Please wait...'))
               : Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Container(
@@ -69,7 +69,7 @@ class _TabBroadcastingState extends State<TabBroadcasting> {
                         uuidField,
                         majorField,
                         minorField,
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         buttonBroadcast,
                       ],
                     ),
@@ -84,7 +84,7 @@ class _TabBroadcastingState extends State<TabBroadcasting> {
     return TextFormField(
       readOnly: broadcasting,
       controller: uuidController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: 'Proximity UUID',
       ),
       validator: (val) {
@@ -105,7 +105,7 @@ class _TabBroadcastingState extends State<TabBroadcasting> {
     return TextFormField(
       readOnly: broadcasting,
       controller: majorController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: 'Major',
       ),
       keyboardType: TextInputType.number,
@@ -133,7 +133,7 @@ class _TabBroadcastingState extends State<TabBroadcasting> {
     return TextFormField(
       readOnly: broadcasting,
       controller: minorController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: 'Minor',
       ),
       keyboardType: TextInputType.number,
@@ -159,8 +159,8 @@ class _TabBroadcastingState extends State<TabBroadcasting> {
 
   Widget get buttonBroadcast {
     final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-      minimumSize: Size(88, 36),
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      minimumSize: const Size(88, 36),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(2)),
       ),
