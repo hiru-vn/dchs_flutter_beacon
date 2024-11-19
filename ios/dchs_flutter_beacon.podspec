@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 A comprehensive Flutter plugin that enables beacon ranging, monitoring, and broadcasting functionalities using CoreLocation and CoreBluetooth frameworks.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/dariocavada/dchs_flutter_beacon'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Dario Cavada' => 'dario.cavada.lab@gmail.com' }
   s.source           = { :path => '.' }
