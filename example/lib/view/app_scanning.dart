@@ -61,6 +61,10 @@ class TabScanningState extends State<TabScanning> {
           identifier: 'BeaconType2',
           proximityUUID: '6a84c716-0f2a-1ce9-f210-6a63bd873dd9',
         ),
+        Region(
+          identifier: 'BlueUp',
+          proximityUUID: 'acfd065e-c3c0-11e3-9bbe-1a514932ac01',
+        ),
       ];
     } else {
       regions = [

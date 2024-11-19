@@ -13,7 +13,7 @@ import io.flutter.plugin.common.EventChannel
 import org.altbeacon.beacon.*
 import java.lang.ref.WeakReference
 
-class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity: Activity) {
+class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin,  private val activity: Activity) {
 
     companion object {
         private val TAG = FlutterBeaconScanner::class.java.simpleName
@@ -29,12 +29,12 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity
 
     val rangingStreamHandler = object : EventChannel.StreamHandler {
         override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-            Log.d("RANGING", "Start ranging = $arguments")
+            Log.d("FLUTTER-BEACON - RANGING", "Start ranging = $arguments")
             startRanging(arguments, events)
         }
 
         override fun onCancel(arguments: Any?) {
-            Log.d("RANGING", "Stop ranging = $arguments")
+            Log.d("FLUTTER-BEACON - RANGING", "Stop ranging = $arguments")
             stopRanging()
         }
     }
@@ -51,7 +51,7 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity
                 }
             }
         } else {
-            eventSink?.error("Beacon", "Invalid region for ranging", null)
+            eventSink?.error("FLUTTER-BEACON - Beacon", "Invalid region for ranging", null)
             return
         }
         eventSinkRanging = eventSink
@@ -65,7 +65,7 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity
 
     fun startRanging() {
         if (regionRanging.isNullOrEmpty()) {
-            Log.e("RANGING", "Region ranging is null or empty. Ranging not started.")
+            Log.e("FLUTTER-BEACON - RANGING", "Region ranging is null or empty. Ranging not started.")
             return
         }
         try {
@@ -78,11 +78,12 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity
                 }
             }
         } catch (e: RemoteException) {
-            eventSinkRanging?.error("Beacon", e.localizedMessage, null)
+            eventSinkRanging?.error("FLUTTER-BEACON - Beacon", e.localizedMessage, null)
         }
     }
 
     fun stopRanging() {
+        Log.d("FLUTTER-BEACON - RANGING", "stopRanging() called")
         if (!regionRanging.isNullOrEmpty()) {
             try {
                 val beaconManager = plugin.getBeaconManager()
@@ -97,16 +98,22 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity
     }
 
     private val rangeNotifier = RangeNotifier { beacons, region ->
-        eventSinkRanging?.let { sink ->
+        if (eventSinkRanging != null) {
             val map = mutableMapOf<String, Any?>()
             map["region"] = FlutterBeaconUtils.regionToMap(region)
             map["beacons"] = FlutterBeaconUtils.beaconsToArray(ArrayList(beacons))
             handler.post {
-                sink.success(map)
+                if (eventSinkRanging != null) {
+                    eventSinkRanging?.success(map)
+                } else {
+                    Log.e("FLUTTER-BEACON - RANGING", "eventSinkRanging is null inside handler")
+                }
             }
+        } else {
+            Log.e("FLUTTER-BEACON - RANGING", "eventSinkRanging is null before handler")
         }
     }
-
+    
     val monitoringStreamHandler = object : EventChannel.StreamHandler {
         override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
             startMonitoring(arguments, events)
@@ -118,7 +125,7 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity
     }
 
     private fun startMonitoring(arguments: Any?, eventSink: EventChannel.EventSink?) {
-        Log.d(TAG, "START MONITORING = $arguments")
+        Log.d(TAG, "FLUTTER-BEACON - START MONITORING = $arguments")
         if (arguments is List<*>) {
             regionMonitoring = mutableListOf()
             arguments.forEach { obj ->
@@ -213,6 +220,13 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity
 
     val beaconConsumer = object : BeaconConsumer {
         override fun onBeaconServiceConnect() {
+            val beaconManager = plugin.getBeaconManager()
+            /*beaconManager?.apply {
+                foregroundScanPeriod = 1100L
+                foregroundBetweenScanPeriod = 0L
+                backgroundScanPeriod = 1100L
+                backgroundBetweenScanPeriod = 0L
+            }*/
             if (plugin.flutterResult != null) {
                 plugin.flutterResult?.success(true)
                 plugin.flutterResult = null
@@ -223,15 +237,15 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin, activity
         }
 
         override fun getApplicationContext(): Context {
-            return activityRef.get()?.applicationContext!!
+            return activity.applicationContext!!
         }
 
         override fun unbindService(connection: ServiceConnection) {
-            activityRef.get()?.unbindService(connection)
+            activity.unbindService(connection)
         }
 
         override fun bindService(intent: Intent, connection: ServiceConnection, mode: Int): Boolean {
-            return activityRef.get()?.bindService(intent, connection, mode) ?: false
+            return activity.bindService(intent, connection, mode) ?: false
         }
     }
 }

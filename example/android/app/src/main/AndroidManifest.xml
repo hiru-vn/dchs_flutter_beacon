@@ -15,6 +15,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
 
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- uses-permission android:name="android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND" / -->
+
     <application
         android:label="dchs_flutter_beacon_example"
         android:name="${applicationName}"
