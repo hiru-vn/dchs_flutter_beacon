@@ -158,6 +158,9 @@ _streamMonitoring.cancel();
 
 # Author
 
-Flutter Beacon plugin was developed by Eyro Labs. You can contact me at <maulana@cubeacon.com>.
+Flutter Beacon plugin originally was developed by Eyro Labs. 
 
-DCHS Flutter Beacon is an updated version of the original plugin, now ported to Kotlin and Swift by Dario Cavada. For inquiries or support, feel free to reach out at dario.cavada.lab@gmail.com.
+DCHS Flutter Beacon is an updated version of the original plugin, now ported to Kotlin by Dario Cavada. 
+For inquiries or support, feel free to reach out at dario.cavada.lab@gmail.com (https://www.suggesto.eu)
+
+

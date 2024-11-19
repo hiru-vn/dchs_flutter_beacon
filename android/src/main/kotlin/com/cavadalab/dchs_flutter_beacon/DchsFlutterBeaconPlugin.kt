@@ -84,7 +84,7 @@ class DchsFlutterBeaconPlugin : FlutterPlugin, ActivityAware, MethodChannel.Meth
         beaconScanner = FlutterBeaconScanner(this, activity)
         beaconBroadcast = FlutterBeaconBroadcast(activity, iBeaconLayout)
 
-        channel = MethodChannel(messenger, "dchs_flutter_beacon")
+        channel = MethodChannel(messenger, "flutter_beacon")
         channel.setMethodCallHandler(this)
 
         eventChannel = EventChannel(messenger, "flutter_beacon_event")

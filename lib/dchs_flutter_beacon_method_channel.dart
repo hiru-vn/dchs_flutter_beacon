@@ -12,8 +12,7 @@ import 'src/region.dart';
 
 /// An implementation of [DchsFlutterBeaconPlatform] that uses method channels.
 class MethodChannelDchsFlutterBeacon extends DchsFlutterBeaconPlatform {
-  static const MethodChannel _methodChannel =
-      MethodChannel('dchs_flutter_beacon');
+  static const MethodChannel _methodChannel = MethodChannel('flutter_beacon');
   static const EventChannel _rangingChannel =
       EventChannel('flutter_beacon_event');
   static const EventChannel _monitoringChannel =

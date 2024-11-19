@@ -1,7 +1,9 @@
-## [0.6.1]
-* Rewrite plugin with Kotlin
+## [0.6.2]
+* Breaking changes. You have to use dchs_flutter_beacon instead of flutter_beacon.
+* Rewrite plugin (Android part) with Kotlin and rename to dchs_flutter_beacon 
 * Update Android-Beacon-Library to version [2.20.7]
 * Update README.md with new Android permission requirement for broadcast (from Android 12)
+* Recreated the example with latest flutter environment
 
 ## [0.5.1]
 * Migration the example to null safety and to Android v2 embedding
