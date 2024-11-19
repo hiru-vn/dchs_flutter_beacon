@@ -3,11 +3,6 @@
 
 [![Pub](https://img.shields.io/pub/v/dchs_flutter_beacon.svg)](https://pub.dartlang.org/packages/dchs_flutter_beacon) 
 [![GitHub](https://img.shields.io/github/license/dariocavada/dchs_flutter_beacon.svg?color=2196F3)](https://github.com/dariocavada/dchs_flutter_beacon/blob/master/LICENSE) 
-[![Build](https://github.com/dariocavada/dchs_flutter_beacon/workflows/Flutter%20CI/badge.svg)](https://github.com/dariocavada/dchs_flutter_beacon/actions?query=workflow%3A%22Flutter+CI%22) 
-[![Coverage Status](https://coveralls.io/repos/github/dariocavada/dchs_flutter_beacon/badge.svg?branch=master)](https://coveralls.io/github/dariocavada/dchs_flutter_beacon?branch=master)  
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdariocavada%2Fdchs_flutter_beacon.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdariocavada%2Fdchs_flutter_beacon?ref=badge_shield) 
-[![codecov](https://codecov.io/gh/dariocavada/dchs_flutter_beacon/branch/master/graph/badge.svg)](https://codecov.io/gh/dariocavada/dchs_flutter_beacon)
-
 
 [Flutter plugin](https://pub.dartlang.org/packages/dchs_flutter_beacon/) to work with iBeacons.  
 
