@@ -1,3 +1,7 @@
+## [0.6.3]
+* Fixed bugs in the Android Beacon Scanner and improved exception handling.
+* Added BlueUP beacon proximityUUID
+
 ## [0.6.2]
 * Breaking changes. You have to use dchs_flutter_beacon instead of flutter_beacon.
 * Rewrite plugin (Android part) with Kotlin and rename to dchs_flutter_beacon 
