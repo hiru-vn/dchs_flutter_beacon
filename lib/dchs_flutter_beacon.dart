@@ -47,10 +47,20 @@ class DchsFlutterBeacon {
   Future<bool> get openBluetoothSettings => _platform.openBluetoothSettings;
   Future<bool> get openLocationSettings => _platform.openLocationSettings;
   Future<bool> get openApplicationSettings => _platform.openApplicationSettings;
+
   Future<bool> setScanPeriod(int scanPeriod) =>
       _platform.setScanPeriod(scanPeriod);
   Future<bool> setBetweenScanPeriod(int scanPeriod) =>
       _platform.setBetweenScanPeriod(scanPeriod);
+  Future<bool> setBackgroundScanPeriod(int scanPeriod) =>
+      _platform.setBackgroundScanPeriod(scanPeriod);
+  Future<bool> setBackgroundBetweenScanPeriod(int scanPeriod) =>
+      _platform.setBackgroundBetweenScanPeriod(scanPeriod);
+
+  Future<bool> setUseTrackingCache(bool enable) =>
+      _platform.setUseTrackingCache(enable);
+  Future<bool> setMaxTrackingAge(int age) => _platform.setMaxTrackingAge(age);
+
   Future<bool> get close => _platform.close;
   Stream<RangingResult> ranging(List<Region> regions) =>
       _platform.ranging(regions);

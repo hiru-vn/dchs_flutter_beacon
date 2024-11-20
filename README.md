@@ -42,7 +42,29 @@ and if you want to broadcast beacons:
 <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
 ```
 
-Refer to the example for more detailed information..
+Refer to the example for more detailed information.
+
+#### iOS 13+ Beacon Visibility Issue
+
+On iOS 13 and later, beacons may only appear briefly before being lost. 
+To mitigate this issue, try increasing the setBetweenScanPeriod parameter to a value greater than 0:
+
+``` dart
+await flutterBeacon.setScanPeriod(1000);
+await flutterBeacon.setBetweenScanPeriod(500);
+```
+
+#### Persistent Beacon Detection Using Cache
+If you want beacons to persistently appear in the results, you can enable the tracking cache and set a maximum tracking age. For example:
+
+``` dart
+await flutterBeacon.setUseTrackingCache(true);
+await flutterBeacon.setMaxTrackingAge(10000);
+```
+
+#### Android Debug Mode - Developer Options
+
+When using Android in debug mode, some developers have reported improved beacon recognition by disabling the "Bluetooth A2DP Hardware Offload" option in the Developer Settings. Disabling this feature can make beacon detection more reliable.
 
 ### Setup specific for iOS
 

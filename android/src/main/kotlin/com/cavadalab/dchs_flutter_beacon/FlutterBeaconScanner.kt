@@ -220,13 +220,7 @@ class FlutterBeaconScanner(private val plugin: DchsFlutterBeaconPlugin,  private
 
     val beaconConsumer = object : BeaconConsumer {
         override fun onBeaconServiceConnect() {
-            val beaconManager = plugin.getBeaconManager()
-            /*beaconManager?.apply {
-                foregroundScanPeriod = 1100L
-                foregroundBetweenScanPeriod = 0L
-                backgroundScanPeriod = 1100L
-                backgroundBetweenScanPeriod = 0L
-            }*/
+            
             if (plugin.flutterResult != null) {
                 plugin.flutterResult?.success(true)
                 plugin.flutterResult = null

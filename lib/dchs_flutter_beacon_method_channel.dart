@@ -100,6 +100,30 @@ class MethodChannelDchsFlutterBeacon extends DchsFlutterBeaconPlatform {
   }
 
   @override
+  Future<bool> setBackgroundScanPeriod(int scanPeriod) async {
+    return await _methodChannel
+        .invokeMethod('setBackgroundScanPeriod', {"scanPeriod": scanPeriod});
+  }
+
+  @override
+  Future<bool> setBackgroundBetweenScanPeriod(int scanPeriod) async {
+    return await _methodChannel.invokeMethod(
+        'setBackgroundBetweenScanPeriod', {"betweenScanPeriod": scanPeriod});
+  }
+
+  @override
+  Future<bool> setUseTrackingCache(bool enable) async {
+    return await _methodChannel
+        .invokeMethod('setUseTrackingCache', {"enable": enable});
+  }
+
+  @override
+  Future<bool> setMaxTrackingAge(int maxTrackingAge) async {
+    return await _methodChannel
+        .invokeMethod('setMaxTrackingAge', {"maxTrackingAge": maxTrackingAge});
+  }
+
+  @override
   Future<bool> get close async {
     final result = await _methodChannel.invokeMethod('close');
     return _parseBoolResult(result);

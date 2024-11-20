@@ -1,5 +1,13 @@
 package com.cavadalab.dchs_flutter_beacon
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.os.Build
+import android.util.Log
+
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -72,7 +80,49 @@ class DchsFlutterBeaconPlugin : FlutterPlugin, ActivityAware, MethodChannel.Meth
         activityPluginBinding?.addActivityResultListener(this)
         activityPluginBinding?.addRequestPermissionsResultListener(this)
 
+
+        //BeaconManager.setUseTrackingCache(true)
+
         beaconManager = BeaconManager.getInstanceForApplication(activity.applicationContext)
+        //beaconManager!!.setMaxTrackingAge(10000)
+        //beaconManager!!.useTrackingCache(true) 
+        //beaconManager!!.maxTrackingAgeMillis(10000)
+        //beaconManager!!.setLongScanForcingEnabled(true)
+
+    /*
+        // Defaults
+         const val regionExitPeriodMillis = 30000
+        const val useTrackingCache = true
+        const val maxTrackingAgeMillis = 10000
+
+        const val longScanForcingEnabled = false
+        
+         */
+
+        /* Add parameters pass from flutter */
+        //BeaconManager.setDebug(true)
+
+        /* Add parameters pass from flutter */
+        
+        /*beaconManager!!.foregroundScanPeriod = 1100L
+        beaconManager!!.foregroundBetweenScanPeriod = 500L
+        beaconManager!!.backgroundScanPeriod = 1100L
+        beaconManager!!.backgroundBetweenScanPeriod = 500L
+
+        beaconManager!!.setEnableScheduledScanJobs(true)*/
+
+        /*beaconManager!!.enableForegroundServiceScanning(null, 456)
+        beaconManager!!.setEnableScheduledScanJobs(true)
+        beaconManager!!.isRegionStatePersistenceEnabled = true
+        beaconManager!!.isBleEnable = true
+        
+        beaconManager!!.isBackgroundModeUnrestrictedByLocation = true
+        beaconManager!!.isAnyConsumerBound = true
+        beaconManager!!.isScannerInScanMode = true*/
+        
+        /* Add parameters pass from flutter */
+        //setupForegroundService(activity.applicationContext)
+
         val iBeaconLayout = BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24")
 
         if (!beaconManager!!.beaconParsers.contains(iBeaconLayout)) {
@@ -99,6 +149,45 @@ class DchsFlutterBeaconPlugin : FlutterPlugin, ActivityAware, MethodChannel.Meth
         eventChannelAuthorizationStatus = EventChannel(messenger, "flutter_authorization_status_changed")
         eventChannelAuthorizationStatus.setStreamHandler(locationAuthorizationStatusStreamHandler)
     }
+
+    private fun setupForegroundService(context: Context) {
+        Log.d("DchsFlutterBeaconPlugin", "setupForegroundService iniziato")
+        
+        val builder: Notification.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d("DchsFlutterBeaconPlugin", "setupForegroundService iniziato beacon-ref-notification-id")
+            Notification.Builder(context, "beacon-ref-notification-id")
+        } else {
+            Notification.Builder(context)
+        }
+        builder.setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setContentTitle("Beacon services")
+
+        val intent = Intent(context, activity!!.javaClass)
+        val pendingIntent = PendingIntent.getActivity(
+            context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        builder.setContentIntent(pendingIntent)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "beacon-ref-notification-id",
+                "My Notification Name",
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = "My Notification Channel Description"
+            }
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+            builder.setChannelId(channel.id)
+            Log.d("DchsFlutterBeaconPlugin", "NotificationChannel creato")
+        }
+
+        val notification = builder.build()
+        BeaconManager.getInstanceForApplication(context).enableForegroundServiceScanning(notification, 456)
+        Log.d("DchsFlutterBeaconPlugin", "Foreground service scanning abilitato")
+    }
+
+
 
     private fun teardownChannels() {
         activityPluginBinding?.removeActivityResultListener(this)
@@ -148,6 +237,36 @@ class DchsFlutterBeaconPlugin : FlutterPlugin, ActivityAware, MethodChannel.Meth
                 } catch (e: RemoteException) {
                     result.success(false)
                 }
+            }
+            "setBackgroundScanPeriod" -> {
+                val scanPeriod = call.argument<Int>("scanPeriod") ?: 1100
+                beaconManager!!.backgroundScanPeriod = scanPeriod.toLong()
+                try {
+                    beaconManager!!.updateScanPeriods()
+                    result.success(true)
+                } catch (e: RemoteException) {
+                    result.success(false)
+                }
+            }
+            "setBackgroundBetweenScanPeriod" -> {
+                val betweenScanPeriod = call.argument<Int>("betweenScanPeriod") ?: 0
+                beaconManager!!.backgroundBetweenScanPeriod = betweenScanPeriod.toLong()
+                try {
+                    beaconManager!!.updateScanPeriods()
+                    result.success(true)
+                } catch (e: RemoteException) {
+                    result.success(false)
+                }
+            }
+            "setUseTrackingCache" -> {
+                val enabled = call.argument<Boolean>("enable") ?: false
+                BeaconManager.setUseTrackingCache(enabled)
+                result.success(true)
+            }
+            "setMaxTrackingAge" -> {
+                val maxTrackingAge = call.argument<Int>("maxTrackingAge") ?: 10000
+                beaconManager!!.setMaxTrackingAge(maxTrackingAge)
+                result.success(true)
             }
             "setLocationAuthorizationTypeDefault" -> {
                 // Android does not have the concept of "requestWhenInUse" and "requestAlways" like iOS does,

@@ -40,6 +40,16 @@ class TabScanningState extends State<TabScanning> {
   }
 
   initScanBeacon() async {
+    await flutterBeacon.setScanPeriod(1000);
+    await flutterBeacon.setBetweenScanPeriod(500);
+    await flutterBeacon.setUseTrackingCache(true);
+    await flutterBeacon.setMaxTrackingAge(10000);
+
+    await flutterBeacon.setBackgroundScanPeriod(1000);
+    await flutterBeacon.setBackgroundBetweenScanPeriod(500);
+
+    //await flutterBeacon.setEnableScheduledScanJobs(true);
+
     await flutterBeacon.initializeScanning;
     if (!controller.authorizationStatusOk ||
         !controller.locationServiceEnabled ||
@@ -64,6 +74,10 @@ class TabScanningState extends State<TabScanning> {
         Region(
           identifier: 'BlueUp',
           proximityUUID: 'acfd065e-c3c0-11e3-9bbe-1a514932ac01',
+        ),
+        Region(
+          identifier: 'BlueUp Maxi',
+          proximityUUID: '909C3CF9-FC5C-4841-B695-380958A51A5A',
         ),
       ];
     } else {

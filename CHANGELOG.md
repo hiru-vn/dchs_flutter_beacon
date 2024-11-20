@@ -1,3 +1,16 @@
+## [0.6.4]
+* Added
+    * New Methods:
+        * setUseTrackingCache() and setMaxTrackingAge() for enhanced beacon persistence.
+    * Example Updates:
+        * Demonstrated the usage of setUseTrackingCache() and setMaxTrackingAge() in the example.
+        * Included the usage of setScanPeriod(1000) and setBetweenScanPeriod(500) in the example.
+
+* Updated
+    * Documentation:
+        * Enhanced the README to include details on the new methods.
+        * Added troubleshooting tips for beacon detection issues, particularly for Android 13+.
+
 ## [0.6.3]
 * Fixed bugs in the Android Beacon Scanner and improved exception handling.
 * Added BlueUP beacon proximityUUID
